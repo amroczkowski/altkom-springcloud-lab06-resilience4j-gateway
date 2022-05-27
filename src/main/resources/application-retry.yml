@@ -9,59 +9,14 @@ spring:
           predicates:
             - Path=/project/**
           filters:
-            - name: CircuitBreaker
+            - name: Retry
               args:
-                name: projectCircuitBreaker
-                fallbackUri: forward:/projectFallback
+                retries: 3
+                methods: GET
+                backoff:
+                  firstBackoff: 100s
+                  maxBackoff: 1000s
         - id: employee-service
           uri: lb://employee-service
           predicates:
             - Path=/employee/**
-
-#spring:
-#  cloud:
-#    gateway:
-#      routes:
-#        - id: user
-#          uri: lb://user
-#          predicates:
-#            - Path=/user/**
-#          filters:
-#            - name: CircuitBreaker
-#              args:
-#                name: userCircuitBreaker
-#                fallbackUri: forward:/userFallback
-#            - name: Retry
-#              args:
-#                retries: 3
-#                methods: GET
-#                backoff:
-#                  firstBackoff: 5s
-#                  maxBackoff: 10s
-#            - name: RequestRateLimiter
-#              args:
-#                redis-rate-limiter.replenishRate: 10
-#                redis-rate-limiter.burstCapacity: 20
-#                redis-rate-limiter.requestedTokens: 1
-#      metrics:
-#        enabled: true
-#  redis:
-#    connect-timeout: 30s
-#    host: localhost
-#    port: 6379
-#    timeout: 1s
-#
-#resilience4j:
-#  timelimiter:
-#    instances:
-#      userCircuitBreaker:
-#        timeoutDuration: 5s
-#  circuitbreaker:
-#    instances:
-#      userCircuitBreaker:
-#        sliding-window-size: 4
-#        failure-rate-threshold: 50
-#        wait-duration-in-open-state: 10s
-#        permitted-number-of-calls-in-half-open-state: 2
-#        automatic-transition-from-open-to-half-open-enabled: true
-#        register-health-indicator: true
