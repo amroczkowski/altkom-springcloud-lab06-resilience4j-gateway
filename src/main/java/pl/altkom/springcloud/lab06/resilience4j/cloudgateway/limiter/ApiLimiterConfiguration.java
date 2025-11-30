@@ -12,5 +12,6 @@ public class ApiLimiterConfiguration {
     @Bean
     public KeyResolver keyResolver() {
         return exchange -> Mono.just("1");
+//        return exchange -> Mono.justOrEmpty(exchange.getRequest().getHeaders().getFirst("user"));
     }
 }

@@ -1,22 +1,26 @@
+server:
+  port: 8080
 spring:
   application:
     name: gateway
   cloud:
     gateway:
-      routes:
-        - id: project-service
-          uri: lb://project-service
-          predicates:
-            - Path=/project/**
-          filters:
-            - name: Retry
-              args:
-                retries: 3
-                methods: GET
-                backoff:
-                  firstBackoff: 100s
-                  maxBackoff: 1000s
-        - id: employee-service
-          uri: lb://employee-service
-          predicates:
-            - Path=/employee/**
+      server:
+        webflux:
+          routes:
+            - id: project-service
+              uri: lb://project-service
+              predicates:
+                - Path=/project/**
+              filters:
+                - name: Retry
+                  args:
+                    retries: 3
+                    methods: GET
+                    backoff:
+                      firstBackoff: 100s
+                      maxBackoff: 1000s
+            - id: employee-service
+              uri: lb://employee-service
+              predicates:
+                - Path=/employee/**
