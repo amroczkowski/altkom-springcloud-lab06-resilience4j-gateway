@@ -17,6 +17,9 @@ spring:
                   args:
                     name: projectServiceCircuitBreaker
                     fallbackUri: forward:/projectServiceFallback
+              metadata:
+                connect-timeout: 3000
+                response-timeout: 3000
             - id: employee-service
               uri: lb://employee-service
               predicates:
