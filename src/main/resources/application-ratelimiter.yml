@@ -22,8 +22,9 @@ spring:
               uri: lb://employee-service
               predicates:
                 - Path=/employee/**
-  redis:
-    connect-timeout: 30s
-    host: localhost
-    port: 6379
-    timeout: 1s
+  data:
+    redis:
+      connect-timeout: 30s
+      host: localhost
+      port: 6379
+      timeout: 1s
