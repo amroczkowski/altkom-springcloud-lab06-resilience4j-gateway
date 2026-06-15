@@ -15,8 +15,8 @@ spring:
               filters:
                 - name: RequestRateLimiter
                   args:
-                    redis-rate-limiter.replenishRate: 10 # liczba dodawanych tokenów w każdej sekundzie
-                    redis-rate-limiter.burstCapacity: 20 # max tokenów do wykorzystania
+                    redis-rate-limiter.replenishRate: 2 # liczba dodawanych tokenów w każdej sekundzie
+                    redis-rate-limiter.burstCapacity: 2 # max tokenów do wykorzystania
                     redis-rate-limiter.requestedTokens: 1 # tokeny w ramach requesta
             - id: employee-service
               uri: lb://employee-service
